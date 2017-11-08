@@ -36,7 +36,7 @@ end
 environment :prod do
   set include_erts: true
   set include_src: false
-  set cookie: :"$uLjmIDR:SVnct&FVZ(;yRoIjhU@*?g$7C(srt67jyW&|8uT7&QjMCwI4B<KHzg&",
+  set cookie: :"$uLjmIDR:SVnct&FVZ(;yRoIjhU@*?g$7C(srt67jyW&|8uT7&QjMCwI4B<KHzg&"
   set output_dir: "rel/admin_manager"
 end
 
