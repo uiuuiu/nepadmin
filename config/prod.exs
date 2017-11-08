@@ -18,7 +18,7 @@ config :admin_manager, AdminManager.Endpoint,
   server: true,
   code_reloader: false
 
-config :myapp, Myapp.Repo,
+config :admin_manager, AdminManager.Repo,
   adapter: Ecto.Adapters.Postgres,
   hostname: "localhost",
   username: "nepshop",
