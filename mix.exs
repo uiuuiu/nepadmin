@@ -20,7 +20,7 @@ defmodule AdminManager.Mixfile do
   def application do
     [
       mod: {AdminManager, []},
-      extra_applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext, :distillery, :edeliver]
+      extra_applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext, :edeliver]
     ]
   end
 
