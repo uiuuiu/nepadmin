@@ -20,7 +20,7 @@ defmodule AdminManager.Mixfile do
   def application do
     [
       mod: {AdminManager, []},
-      extra_applications: [:logger]
+      extra_applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext, :distillery, :edeliver]
     ]
   end
 
@@ -45,7 +45,9 @@ defmodule AdminManager.Mixfile do
       {:timex, "~> 3.1"},
       {:number, "~> 0.4.1"},
       {:credo, "~> 0.8", only: [:dev, :test], runtime: false},
-      {:navigation_history, "~> 0.0"}
+      {:navigation_history, "~> 0.0"},
+      {:edeliver, "~> 1.4.3"},
+      {:distillery, "~> 1.5", runtime: false}
     ]
   end
 
