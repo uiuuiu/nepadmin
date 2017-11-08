@@ -1,0 +1,11 @@
+.form-group.row
+  label.col-sm-3.form-control-label ID:
+  .col-md-3
+    = @product_type.id
+.form-group.row
+  label.col-sm-3.form-control-label Name:
+  .col-md-3
+    = @product_type.name
+.line
+.form-group.row
+  = link "Back", to: admin_product_types_path(@conn, :index), class: "btn btn-default btn-xs"

@@ -1,0 +1,10 @@
+= form_for @changeset, admin_week_statistic_path(@conn, :show, 0), [class: "form-horizontal", method: "get"], fn f ->
+  = datetime_select f, :date, value: Timex.parse!(f.source.changes[:date], "{YYYY}{0M}{0D}"), builder: fn b ->
+    = b.(:year, [])
+    = " / "
+    = b.(:month, [])
+    = " / "
+    = select f, :date, 1..6, [name: "calendar[date][week]", selected: @week]
+
+  span
+    = submit "Select", class: "btn btn-link"

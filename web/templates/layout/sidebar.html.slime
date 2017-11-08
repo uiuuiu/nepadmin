@@ -1,0 +1,82 @@
+/! Side Navbar
+nav.side-navbar
+  /! Sidebar Header
+  .sidebar-header.d-flex.align-items-center
+    .avatar
+      img.img-fluid.rounded-circle alt="..." src="#{static_path(@conn, "/images/avatar-1.jpg")}"
+    .title
+      h1.h4 Mark Stephen
+      p Web Designer
+  /! Sidebar Navidation Menus
+  span.heading Main
+  ul.list-unstyled
+    li.active
+      a href="./"
+        i.icon-home
+        | Home
+    li
+      a aria-expanded="false" data-toggle="collapse" href="#dashproducts"
+        i.icon-interface-windows
+        | Products
+      ul#dashproducts.collapse.list-unstyled
+        li
+          = link "Product List", to: admin_products_path(@conn, :index)
+        li
+          = link "Producer List", to: admin_producers_path(@conn, :index)
+        li
+          = link "Product Type List", to: admin_product_types_path(@conn, :index)
+        li
+          = link "Product Detail", to: admin_product_detail_path(@conn, :index)
+        / li
+        /   a href="#"  Page
+    li
+      a aria-expanded="false" data-toggle="collapse" href="#dashstatistics"
+        i.icon-interface-windows
+        | Statistics
+      ul#dashstatistics.collapse.list-unstyled
+        li
+          = link "Day statistic", to: admin_day_statistic_path(@conn, :index)
+        li
+          = link "Week statistic", to: admin_week_statistic_path(@conn, :index)
+        / li
+        /   = link "Producer List", to: producers_path(@conn, :index)
+        / li
+        /   = link "Product Type List", to: product_types_path(@conn, :index)
+        / li
+        /   = link "Product Detail", to: product_detail_path(@conn, :index)
+        / li
+        /   a href="#"  Page
+  /   li
+  /     a href="tables.html"
+  /       i.icon-grid
+  /       | Tables
+  /   li
+  /     a href="charts.html"
+  /       i.fa.fa-bar-chart
+  /       | Charts
+  /   li
+  /     a href="forms.html"
+  /       i.icon-padnote
+  /       | Forms
+  /   li
+  /     a href="login.html"
+  /       i.icon-interface-windows
+  /       | Login Page
+  / span.heading Extras
+  / ul.list-unstyled
+  /   li
+  /     a href="#"
+  /       i.icon-flask
+  /       | Demo
+  /   li
+  /     a href="#"
+  /       i.icon-screen
+  /       | Demo
+  /   li
+  /     a href="#"
+  /       i.icon-mail
+  /       | Demo
+  /   li
+  /     a href="#"
+  /       i.icon-picture
+  /       | Demo

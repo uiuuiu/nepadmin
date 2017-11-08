@@ -1,0 +1,10 @@
+= form_for @changeset, admin_product_types_path(@conn, :update, @product_type), [class: "form-horizontal", method: "put"], fn f ->
+  .form-group.row
+    label.col-sm-3.form-control-label Name:
+    .col-md-3
+      = text_input f, :name, [class: "form-control"]
+  .line
+  .form-group.row
+    .col-sm-4.offset-sm-3
+      = submit "Submit", [class: "btn btn-primary"]
+      = link "Back", to: admin_product_types_path(@conn, :index), class: "btn btn-xs"

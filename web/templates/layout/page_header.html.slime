@@ -1,0 +1,5 @@
+/! Page Header
+header.page-header
+  .container-fluid
+    h2.no-margin-bottom
+      = @title

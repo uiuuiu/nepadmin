@@ -1,0 +1,16 @@
+table.table
+  thead
+    tr
+      th ID
+      th Name
+      th
+  tbody
+    = for producer <- @producers do
+      tr
+        td= producer.id
+        td= producer.name
+        td.text-right
+          = link "Show", to: admin_producers_path(@conn, :show, producer), class: "btn btn-default btn-xs"
+          = link "Edit", to: admin_producers_path(@conn, :edit, producer), class: "btn btn-default btn-xs"
+          = link "Delete", to: admin_producers_path(@conn, :delete, producer), method: :delete
+= link "New", to: admin_producers_path(@conn, :new), class: "btn btn-danger"

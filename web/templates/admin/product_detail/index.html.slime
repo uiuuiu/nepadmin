@@ -1,0 +1,16 @@
+= admin_error_tag get_flash(@conn, :info), get_flash(@conn, :error)
+table.table
+  thead
+    tr
+      th ID
+      th Name
+      th
+  tbody
+    = for product <- @products do
+      tr
+        td= product.id
+        td= product.name
+        td.text-right
+          = link "Show", to: admin_product_detail_path(@conn, :show, product), class: "btn btn-default btn-xs"
+          = link "Edit", to: admin_product_detail_path(@conn, :edit, product), class: "btn btn-default btn-xs"
+= link "New", to: admin_products_path(@conn, :new), class: "btn btn-danger"

@@ -1,0 +1,44 @@
+= form_for @changeset, admin_week_statistic_path(@conn, :show, 0), [class: "form-horizontal", method: "get"], fn f ->
+  = datetime_select f, :date, value: Timex.parse!(f.source.changes[:date], "{YYYY}{0M}{0D}"), builder: fn b ->
+    = b.(:year, [])
+    = " / "
+    = b.(:month, [])
+    = " / "
+    = select f, :date, Enum.map(1..6, fn(x) -> [key: x, value: x, selected: x == @week] end), [name: "calendar[date][week]"]
+
+  span
+    = submit "Select", class: "btn btn-link"
+= admin_error_tag get_flash(@conn, :info), get_flash(@conn, :error)
+= form_tag "/admin/statistics/week_statistic" do
+  / input type="hidden" name="calendar_id" value="#{@calendar.id}"
+  table.table
+    thead
+      tr
+        th
+        = for calendar <- @calendars do
+          th = StringConverter.stringdate_to_date(calendar.date, "%Y%m%d")
+        th Total
+    tbody
+      = for product <- @products do
+        tr
+          td = product.name
+          = for calendar <- @calendars do
+            - day_statistic = Enum.find(product.product_day_statistics, fn(x) -> x.calendar_id == calendar.id end)
+            td
+              = if day_statistic do
+                p =day_statistic.amount
+                p =NumberConverter.to_vnd_currency(day_statistic.profit)
+          td
+            p = StatisticCalculator.calculate_total_amount_of_by_product(product)
+            p = StatisticCalculator.calculate_total_profit_of_by_product(product)
+      tr
+        th Total
+        = for calendar <- @calendars do
+          td
+            p = StatisticCalculator.calculate_total_amount_by_day(@all_product_day_statistics, calendar)
+            p = StatisticCalculator.calculate_total_profit_by_day(@all_product_day_statistics, calendar)
+        td
+          p
+            strong = StatisticCalculator.calculate_total_amount(@all_product_day_statistics)
+          p
+            strong = StatisticCalculator.calculate_total_profit(@all_product_day_statistics)

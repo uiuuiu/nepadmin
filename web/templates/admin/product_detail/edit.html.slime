@@ -1,0 +1,131 @@
+= if @product.product_detail_versions do
+  .form-group.row
+    .col-sm-3
+      select
+        = for version <- @product.product_detail_versions do
+          option value="#{version.id}"
+            = "#{StringConverter.stringdate_to_date(version.effect_start_day, "%Y%m%d")} ~ #{StringConverter.stringdate_to_date(version.effect_end_day, "%Y%m%d")}"
+- else
+  .form-group.row
+    .col-sm-3
+      | No version
+= if @latest_product_detail_version && @latest_product_detail_version.id do
+  = form_for @changeset, admin_product_detail_path(@conn, :update, @latest_product_detail_version), [class: "form-horizontal", method: "put"], fn f ->
+    = hidden_input f, :product_id
+    .form-group.row
+      label.col-sm-3.form-control-label ID:
+      .col-md-3
+        = @latest_product_detail_version.id
+        / = text_input f, :name, [class: "form-control"]
+    .form-group.row
+      label.col-sm-3.form-control-label Product name:
+      .col-md-3
+        = @latest_product_detail_version.product.name
+        / = text_input f, :name, [class: "form-control"]
+    .line
+    .form-group.row
+      label.col-sm-3.form-control-label Version effect day:
+      .col-md-1
+        | From
+      .col-md-2
+        - start_day = StringConverter.stringdate_to_date(@latest_product_detail_version.effect_start_day, "%Y%m%d")
+        = text_input f, :effect_start_day, [class: "form-control datepicker", size: 8, value: start_day]
+      .col-md-1
+        | to
+      .col-md-2
+        - end_day = StringConverter.stringdate_to_date(@latest_product_detail_version.effect_end_day, "%Y%m%d")
+        = text_input f, :effect_end_day, [class: "form-control datepicker", size: 8, value: end_day]
+    .line
+    .form-group.row
+      label.col-sm-3.form-control-label Producer:
+      .col-md-3
+        = select f, :producer_id, Enum.map(@producers, &{&1.name, &1.id}), prompt: ""
+    .line
+    .form-group.row
+      label.col-sm-3.form-control-label Product type:
+      .col-md-3
+        = select f, :product_type_id, Enum.map(@product_types, &{&1.name, &1.id}), prompt: ""
+    .line
+    .form-group.row
+      label.col-sm-3.form-control-label Initial Price:
+      .col-md-3
+        = number_input f, :initial_price, [class: "form-control"]
+      h3.h4.strong VND
+    .line
+    .form-group.row
+      label.col-sm-3.form-control-label Price:
+      .col-md-3
+        = number_input f, :price, [class: "form-control"]
+      h3.h4.strong VND
+    .line
+    .form-group.row
+      label.col-sm-3.form-control-label Profit:
+      .col-md-3
+        = NumberConverter.to_vnd_currency @latest_product_detail_version.profit
+    .line
+    .form-group.row
+      label.col-sm-3.form-control-label Amount:
+      .col-md-3
+        = number_input f, :amount, [class: "form-control"]
+    .line
+    .form-group.row
+      .col-sm-4.offset-sm-3
+        = submit "Submit", [class: "btn btn-primary"]
+        = link "Back", to: admin_product_detail_path(@conn, :index), class: "btn btn-xs"
+- else
+  = form_for @changeset, admin_product_detail_path(@conn, :create), [class: "form-horizontal"], fn f ->
+    = hidden_input f, :product_id
+    .form-group.row
+      label.col-sm-3.form-control-label Product name:
+      .col-md-3
+        = @latest_product_detail_version.product.name
+    .line
+    .form-group.row
+      label.col-sm-3.form-control-label Version effect day:
+      .col-md-1
+        | From
+      .col-md-2
+        - start_day = StringConverter.stringtoday_to_date(Timex.today)
+        = text_input f, :effect_start_day, [class: "form-control datepicker", size: 8, value: start_day]
+      .col-md-1
+        | to
+      .col-md-2
+        - end_day = StringConverter.stringtoday_to_date(Timex.today)
+        = text_input f, :effect_end_day, [class: "form-control datepicker", size: 8, value: end_day]
+    .line
+    .form-group.row
+      label.col-sm-3.form-control-label Producer:
+      .col-md-3
+        = select f, :producer_id, Enum.map(@producers, &{&1.name, &1.id}), prompt: ""
+    .line
+    .form-group.row
+      label.col-sm-3.form-control-label Product type:
+      .col-md-3
+        = select f, :product_type_id, Enum.map(@product_types, &{&1.name, &1.id}), prompt: ""
+    .line
+    .form-group.row
+      label.col-sm-3.form-control-label Initial Price:
+      .col-md-3
+        = number_input f, :initial_price, [class: "form-control"]
+      h3.h4.strong VND
+    .line
+    .form-group.row
+      label.col-sm-3.form-control-label Price:
+      .col-md-3
+        = number_input f, :price, [class: "form-control"]
+      h3.h4.strong VND
+    .line
+    .form-group.row
+      label.col-sm-3.form-control-label Profit:
+      .col-md-3
+        = NumberConverter.to_vnd_currency @latest_product_detail_version.profit
+    .line
+    .form-group.row
+      label.col-sm-3.form-control-label Amount:
+      .col-md-3
+        = number_input f, :amount, [class: "form-control"]
+    .line
+    .form-group.row
+      .col-sm-4.offset-sm-3
+        = submit "Submit", [class: "btn btn-primary"]
+        = link "Back", to: admin_product_detail_path(@conn, :index), class: "btn btn-xs"

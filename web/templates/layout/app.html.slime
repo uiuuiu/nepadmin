@@ -1,0 +1,42 @@
+doctype html
+html lang="en"
+  head
+    meta content="text/html; charset=UTF-8" http-equiv="Content-Type"
+    meta charset="utf-8"
+    meta content="IE=edge" http-equiv="X-UA-Compatible"
+    meta content="width=device-width, initial-scale=1" name="viewport"
+    meta content="" name="description"
+    meta content="" name="author"
+    meta content="all,follow" name="robots"
+    /! Google fonts - Roboto
+    link href="https://fonts.googleapis.com/css?family=Poppins:300,400,700" rel="stylesheet"
+    /! Custom stylesheet - for your changes
+    /! link href="css/custom.css" rel="stylesheet"
+    /! Favicon
+    link href="img/favicon.ico" rel="shortcut icon"
+    /! Font Awesome CDN
+    /! you can replace it by local Font Awesome
+    script src="https://use.fontawesome.com/99347ac47f.js"
+    /! Font Icons CSS
+    link href="https://file.myfontastic.com/da58YPMQ7U5HY8Rb6UxkNf/icons.css" rel="stylesheet"
+    /! Tweaks for older IEs
+    /![if lt IE 9]
+      / | <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      / | <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    title Hello AdminManager!
+    link href="#{static_path(@conn, "/css/app.css")}" rel="stylesheet"
+  body
+    .page.home-page
+      = render AdminManager.LayoutView, "navbar.html", assigns
+      .page-content.d-flex.align-items-stretch
+        = render AdminManager.LayoutView, "sidebar.html", assigns
+        .content-inner
+          = render AdminManager.LayoutView, "page_header.html", assigns
+          = render AdminManager.LayoutView, "breadcrumb.html", assigns
+          / Page Content place here
+          = render @view_module, @view_template, assigns
+          / Page Content end here
+          / = render AdminManager.LayoutView, "footer.html", assigns
+    /! Javascript files
+    script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"
+    script src="#{static_path(@conn, "/js/app.js")}"

@@ -1,0 +1,4 @@
+= form_for @changeset, admin_day_statistic_path(@conn, :show, 0), [class: "form-horizontal", method: "get"], fn f ->
+  = date_select f, :date, value: Timex.parse!(f.source.changes[:date], "{YYYY}{0M}{0D}"), year: [options: 2017..2020]
+  span
+    = submit "Select", class: "btn btn-link"

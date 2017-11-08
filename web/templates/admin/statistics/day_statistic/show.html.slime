@@ -1,0 +1,69 @@
+= form_for @changeset, admin_day_statistic_path(@conn, :show, 0), [class: "form-horizontal", method: "get"], fn f ->
+  = date_select f, :date, value: Timex.parse!(f.data.date, "{YYYY}{0M}{0D}"), year: [options: 2017..2020]
+  span
+    = submit "Select", class: "btn btn-link"
+= admin_error_tag get_flash(@conn, :info), get_flash(@conn, :error)
+= form_tag "/admin/statistics/day_statistic" do
+  input type="hidden" name="calendar_id" value="#{@calendar.id}"
+  table.table
+    thead
+      tr
+        th Name
+        th Price version
+        th Sale
+        th Amount
+        th Profit
+    tbody
+      = for {product, counter} <- Enum.with_index(@products) do
+        = if product.product_day_statistic do
+          tr
+            td
+              = product.name
+            td
+              select class="day-statistic-version" name="product_day_statistics[#{counter}][product_detail_version_id]"
+                option
+                = for version <- product.product_detail_versions do
+                  = tag(:option, [value: version.id, selected: version.id == product.product_day_statistic.product_detail_version_id])
+                    = version.price
+              = link "Detail", to: admin_product_detail_path(@conn, :edit, product)
+            td
+              select class="day-statistic-sale" name="product_day_statistics[#{counter}][sale_id]"
+                option
+                = for sale <- @sales do
+                  = tag(:option, [value: sale.id, selected: sale.id == product.product_day_statistic.sale_id])
+                    = sale.name
+            td
+              input name="product_day_statistics[#{counter}][amount]" type="number" value="#{product.product_day_statistic.amount}"
+            td
+              input name="product_day_statistics[#{counter}][profit]" type="number" value="#{product.product_day_statistic.profit}"
+            td.hide
+              input type="hidden" name="product_day_statistics[#{counter}][id]" value="#{product.product_day_statistic.id}"
+              input type="hidden" name="product_day_statistics[#{counter}][product_id]" value="#{product.id}"
+              input type="hidden" name="product_day_statistics[#{counter}][calendar_id]" value="#{@calendar.id}"
+        - else
+          tr
+            td
+              = product.name
+            td
+              select class="day-statistic-version" name="product_day_statistics[#{counter}][product_detail_version_id]"
+                option
+                = for version <- product.product_detail_versions do
+                  option value="#{version.id}"
+                    = version.price
+            td
+              select class="day-statistic-sale" name="product_day_statistics[#{counter}][sale_id]"
+                option
+                = for sale <- @sales do
+                  option value="#{sale.id}"
+                    = sale.name
+            td
+              input name="product_day_statistics[#{counter}][amount]" type="number" value=""
+            td
+              input name="product_day_statistics[#{counter}][profit]" type="number" value=""
+            td.hide
+              input type="hidden" name="product_day_statistics[#{counter}][product_id]" value="#{product.id}"
+              input type="hidden" name="product_day_statistics[#{counter}][calendar_id]" value="#{@calendar.id}"
+  .line
+  .form-group.text-center
+    = submit "Submit", [class: "btn btn-primary"]
+    = link "Back", to: admin_day_statistic_path(@conn, :index), class: "btn btn-xs"

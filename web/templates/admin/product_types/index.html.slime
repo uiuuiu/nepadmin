@@ -1,0 +1,16 @@
+table.table
+  thead
+    tr
+      th ID
+      th Name
+      th
+  tbody
+    = for product_type <- @product_types do
+      tr
+        td= product_type.id
+        td= product_type.name
+        td.text-right
+          = link "Show", to: admin_product_types_path(@conn, :show, product_type), class: "btn btn-default btn-xs"
+          = link "Edit", to: admin_product_types_path(@conn, :edit, product_type), class: "btn btn-default btn-xs"
+          = link "Delete", to: admin_product_types_path(@conn, :delete, product_type), method: :delete
+= link "New", to: admin_product_types_path(@conn, :new), class: "btn btn-danger"
