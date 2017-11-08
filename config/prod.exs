@@ -18,6 +18,14 @@ config :admin_manager, AdminManager.Endpoint,
   server: true,
   code_reloader: false
 
+config :myapp, Myapp.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  hostname: "localhost",
+  username: "nepshop",
+  password: "961993dd",
+  database: "admin_manager_prod",
+  pool_size: 20
+
 # Do not print debug messages in production
 config :logger, level: :info
 
