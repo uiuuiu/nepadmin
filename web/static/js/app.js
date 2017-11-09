@@ -12,7 +12,17 @@
 // If you no longer want to use a dependency, remember
 // to also remove its path from "config.paths.watched".
 import "phoenix_html"
+$('.dropdown').on({
 
+  //fires after dropdown is shown instance method is called.(if you click //anywhere else)
+    "shown.bs.dropdown": function() { this.close= false; },
+
+  //when dropdown is clicked
+    "click": function() { this.close= true; },
+
+ //when close event is triggered
+    "hide.bs.dropdown":  function() { return this.close; }
+});
 // Import local files
 //
 // Local files can be imported directly using relative

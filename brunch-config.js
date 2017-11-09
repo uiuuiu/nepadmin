@@ -18,8 +18,9 @@ exports.config = {
           "web/static/vendor/js/tether.min.js",
           "web/static/vendor/js/bootstrap.js",
           "web/static/vendor/js/bootstrap.min.js",
-          "web/static/vendor/js/charts-custom.min.js",
-          "web/static/vendor/js/charts-home.min.js",
+          "web/static/vendor/js/Chart.min.js",
+          "web/static/vendor/js/charts-custom.js",
+          "web/static/vendor/js/charts-home.js",
           "web/static/vendor/js/front.js",
           "web/static/vendor/js/jquery.cookie.js",
           "web/static/vendor/js/jquery.validate.min.js",
@@ -46,7 +47,7 @@ exports.config = {
           "web/static/vendor/css/boostrap-datepicker3",
           "web/static/vendor/css/boostrap-datepicker3.min",
           "web/static/vendor/css/boostrap-datepicker3.standalone",
-          "web/static/vendor  /css/boostrap-datepicker.standalone.min"
+          "web/static/vendor/css/boostrap-datepicker.standalone.min"
         ] // concat app.css last
       }
     },
