@@ -7,9 +7,9 @@ defmodule AdminManager.Product do
     field :name, :string
 
     has_one :latest_product_detail_version, AdminManager.ProductDetailVersion
-    has_many :product_detail_versions, AdminManager.ProductDetailVersion
+    has_many :product_detail_versions, AdminManager.ProductDetailVersion, on_delete: :delete_all
     has_one :product_day_statistic, AdminManager.ProductDayStatistic
-    has_many :product_day_statistics, AdminManager.ProductDayStatistic
+    has_many :product_day_statistics, AdminManager.ProductDayStatistic, on_delete: :delete_all
     timestamps()
   end
 

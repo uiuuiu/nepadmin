@@ -1,3 +1,4 @@
+= admin_error_tag get_flash(@conn, :info), get_flash(@conn, :error)
 = form_for @changeset, admin_products_path(@conn, :update, @product), [class: "form-horizontal", method: "put"], fn f ->
   .form-group.row
     label.col-sm-3.form-control-label Name:

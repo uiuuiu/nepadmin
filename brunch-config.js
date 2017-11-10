@@ -16,6 +16,8 @@ exports.config = {
         before: [
           "web/static/vendor/js/jquery.min.js",
           "web/static/vendor/js/tether.min.js",
+          "web/static/vendor/js/bootstrap.bundle.js",
+          "web/static/vendor/js/bootstrap.bundle.min.js",
           "web/static/vendor/js/bootstrap.js",
           "web/static/vendor/js/bootstrap.min.js",
           "web/static/vendor/js/Chart.min.js",

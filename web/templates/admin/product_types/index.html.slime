@@ -1,3 +1,4 @@
+= admin_error_tag get_flash(@conn, :info), get_flash(@conn, :error)
 table.table
   thead
     tr
