@@ -5,12 +5,15 @@ defmodule AdminManager.Admin.Statistics.DayStatisticController do
   alias AdminManager.Product
   alias AdminManager.Sale
   alias AdminManager.ProductDayStatistic
-  plug :set_title
+
+  import AdminManager.Plugs.Admin.PageNavigatorPlug
+  import AdminManager.Plugs.Admin.PageInfoPlug
+
+  plug :set_title, "Day statistic" when action in [:index, :show, :new, :edit]
   plug :set_page_function_name
 
   def index(conn, _params) do
     page_function_name = "List"
-    # IEx.pry
     changeset = Calendar.changeset(%Calendar{}, %{"date" => Date.to_iso8601(Date.utc_today, :basic)})
     render conn, "index.html", title: conn.assigns.title, changeset: changeset, page_function_name: page_function_name
   end
@@ -42,27 +45,14 @@ defmodule AdminManager.Admin.Statistics.DayStatisticController do
       cond do
         statistic ->
           ProductDayStatistic.changeset(statistic, element_params)
-          |> Repo.update
+            |> Repo.update
         product ->
           ProductDayStatistic.changeset(%ProductDayStatistic{}, element_params)
-          |> Repo.insert
+            |> Repo.insert
       end
     end
     conn
-    |> put_flash(:info, "Producer created successfully.")
-    |> redirect_back
-  end
-
-  defp set_title(conn, _) do
-    assign(conn, :title, "Day Statistic")
-  end
-
-  defp set_page_function_name(conn, _) do
-    page_function_name = String.capitalize(Atom.to_string(action_name(conn)))
-    assign(conn, :page_function_name, page_function_name)
-  end
-
-  defp redirect_back(conn, opts \\ []) do
-    Phoenix.Controller.redirect(conn, to: NavigationHistory.last_path(conn, opts))
+      |> put_flash(:info, "Producer created successfully.")
+        |> redirect_back
   end
 end
