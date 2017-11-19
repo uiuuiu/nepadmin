@@ -36,6 +36,7 @@ defmodule AdminManager.Router do
       resources "/day_statistic", DayStatisticController
       resources "/week_statistic", WeekStatisticController
     end
+    resources "/orders", OrdersController
   end
 
   # Other scopes may use custom stacks.
