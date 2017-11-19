@@ -2,13 +2,16 @@ require IEx
 defmodule AdminManager.Admin.ProducersController do
   use AdminManager.Web, :controller
   alias AdminManager.Producer
-  plug :set_title
+
+  import AdminManager.Plugs.Admin.PageInfoPlug
+
+  plug :set_title, "Producer" when action in [:index, :show, :new, :edit]
   plug :set_page_function_name
 
   def index(conn, _params) do
     page_function_name = "List"
     producers = Producer
-    |> Repo.all
+      |> Repo.all
     render(conn, "index.html", producers: producers, title: conn.assigns.title, page_function_name: page_function_name)
   end
 
@@ -22,12 +25,12 @@ defmodule AdminManager.Admin.ProducersController do
     case Repo.insert(changeset) do
       {:ok, _producer} ->
         conn
-        |> put_flash(:info, "Producer created successfully.")
-        |> redirect(to: admin_producers_path(conn, :index))
+          |> put_flash(:info, "Producer created successfully.")
+            |> redirect(to: admin_producers_path(conn, :index))
       {:error, changeset} ->
         conn
-        |> assign(:page_function_name, "New")
-        |> render("new.html", changeset: changeset, page_function_name: conn.assigns.page_function_name)
+          |> assign(:page_function_name, "New")
+            |> render("new.html", changeset: changeset, page_function_name: conn.assigns.page_function_name)
     end
   end
 
@@ -48,13 +51,13 @@ defmodule AdminManager.Admin.ProducersController do
     case Repo.update(changeset) do
       {:ok, _producer} ->
         conn
-        |> put_flash(:info, "Producer Updated successfully.")
-        |> redirect(to: admin_producers_path(conn, :edit, id))
+          |> put_flash(:info, "Producer Updated successfully.")
+            |> redirect(to: admin_producers_path(conn, :edit, id))
       {:error, changeset} ->
         conn
-        |> assign(:page_function_name, "Edit")
-        |> put_flash(:error, "Something went wrong!")
-        |> render("edit.html", changeset: changeset, producer: producer, page_function_name: conn.assigns.page_function_name)
+          |> assign(:page_function_name, "Edit")
+            |> put_flash(:error, "Something went wrong!")
+              |> render("edit.html", changeset: changeset, producer: producer, page_function_name: conn.assigns.page_function_name)
     end
   end
 
@@ -68,14 +71,5 @@ defmodule AdminManager.Admin.ProducersController do
         conn = put_flash(conn, :error, "Something went wrong!")
     end
     redirect(conn, to: admin_producers_path(conn, :index))
-  end
-
-  defp set_title(conn, _) do
-    assign(conn, :title, "Producer")
-  end
-
-  defp set_page_function_name(conn, _) do
-    page_function_name = String.capitalize(Atom.to_string(action_name(conn)))
-    assign(conn, :page_function_name, page_function_name)
   end
 end

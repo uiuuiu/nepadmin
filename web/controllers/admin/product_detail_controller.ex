@@ -5,13 +5,16 @@ defmodule AdminManager.Admin.ProductDetailController do
   alias AdminManager.Producer
   alias AdminManager.ProductDetailVersion
   alias AdminManager.ProductType
-  plug :set_title
+
+  import AdminManager.Plugs.Admin.PageInfoPlug
+
+  plug :set_title, "Product Detail" when action in [:index, :show, :new, :edit]
   plug :set_page_function_name
 
   def index(conn, _params) do
     conn = assign(conn, :page_function_name, "List")
     products = Product
-    |> Repo.all
+      |> Repo.all
     render(conn, "index.html", products: products, title: conn.assigns.title, page_function_name: conn.assigns.page_function_name)
   end
 
@@ -32,8 +35,8 @@ defmodule AdminManager.Admin.ProductDetailController do
     case Repo.insert(changeset) do
       {:ok, _product} ->
         conn
-        |> put_flash(:info, "Product abc created a version successfully.")
-        |> redirect(to: admin_product_detail_path(conn, :index))
+          |> put_flash(:info, "Product abc created a version successfully.")
+            |> redirect(to: admin_product_detail_path(conn, :index))
       {:error, changeset} ->
         page_function_name = "New"
         render(conn, "edit.html", changeset: changeset, page_function_name: conn.assigns.page_function_name)
@@ -53,7 +56,7 @@ defmodule AdminManager.Admin.ProductDetailController do
       changeset = ProductDetailVersion.changeset(product.latest_product_detail_version)
     else
       latest_product_detail_version = %ProductDetailVersion{product_id: product.id}
-      |> Repo.preload([:product])
+        |> Repo.preload([:product])
       changeset = ProductDetailVersion.changeset(%ProductDetailVersion{}, %{product_id: product.id})
     end
     producers = Repo.all(Producer)
@@ -78,20 +81,11 @@ defmodule AdminManager.Admin.ProductDetailController do
     case Repo.update(changeset) do
       {:ok, _product_detail_version} ->
         conn
-        |> put_flash(:info, "Product abc updated a version successfully.")
-        |> redirect(to: admin_product_detail_path(conn, :index))
+          |> put_flash(:info, "Product abc updated a version successfully.")
+            |> redirect(to: admin_product_detail_path(conn, :index))
       {:error, changeset} ->
         page_function_name = "Edit"
         render(conn, "edit.html", changeset: changeset, page_function_name: conn.assigns.page_function_name)
     end
-  end
-
-  defp set_title(conn, _) do
-    assign(conn, :title, "Product Detail")
-  end
-
-  defp set_page_function_name(conn, _) do
-    page_function_name = String.capitalize(Atom.to_string(action_name(conn)))
-    assign(conn, :page_function_name, page_function_name)
   end
 end

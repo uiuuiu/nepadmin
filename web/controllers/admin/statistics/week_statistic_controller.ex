@@ -5,7 +5,11 @@ defmodule AdminManager.Admin.Statistics.WeekStatisticController do
   alias AdminManager.Product
   alias AdminManager.Sale
   alias AdminManager.ProductDayStatistic
-  plug :set_title
+
+  import AdminManager.Plugs.Admin.PageNavigatorPlug
+  import AdminManager.Plugs.Admin.PageInfoPlug
+
+  plug :set_title, "Week statistic" when action in [:index, :show, :new, :edit]
   plug :set_page_function_name
 
   def index(conn, _params) do
@@ -54,27 +58,14 @@ defmodule AdminManager.Admin.Statistics.WeekStatisticController do
       cond do
         statistic ->
           ProductDayStatistic.changeset(statistic, element_params)
-          |> Repo.update
+            |> Repo.update
         product ->
           ProductDayStatistic.changeset(%ProductDayStatistic{}, element_params)
-          |> Repo.insert
+            |> Repo.insert
       end
     end
     conn
-    |> put_flash(:info, "Producer created successfully.")
-    |> redirect_back
-  end
-
-  defp set_title(conn, _) do
-    assign(conn, :title, "Week Statistic")
-  end
-
-  defp set_page_function_name(conn, _) do
-    page_function_name = String.capitalize(Atom.to_string(action_name(conn)))
-    assign(conn, :page_function_name, page_function_name)
-  end
-
-  defp redirect_back(conn, opts \\ []) do
-    Phoenix.Controller.redirect(conn, to: NavigationHistory.last_path(conn, opts))
+      |> put_flash(:info, "Producer created successfully.")
+        |> redirect_back
   end
 end

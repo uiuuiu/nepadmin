@@ -2,13 +2,16 @@ require IEx
 defmodule AdminManager.Admin.ProductsController do
   use AdminManager.Web, :controller
   alias AdminManager.Product
-  plug :set_title
+
+  import AdminManager.Plugs.Admin.PageInfoPlug
+
+  plug :set_title, "Product" when action in [:index, :show, :new, :edit]
   plug :set_page_function_name
 
   def index(conn, _params) do
     conn = assign(conn, :page_function_name, "List")
     products = Product
-    |> Repo.all
+      |> Repo.all
     render(conn, "index.html", products: products, title: conn.assigns.title, page_function_name: conn.assigns.page_function_name)
   end
 
@@ -22,12 +25,12 @@ defmodule AdminManager.Admin.ProductsController do
     case Repo.insert(changeset) do
       {:ok, _product} ->
         conn
-        |> put_flash(:info, "Product created successfully.")
-        |> redirect(to: admin_products_path(conn, :index))
+          |> put_flash(:info, "Product created successfully.")
+            |> redirect(to: admin_products_path(conn, :index))
       {:error, changeset} ->
         conn
-        |> assign(:page_function_name, "New")
-        |> render("new.html", changeset: changeset, page_function_name: conn.assigns.page_function_name)
+          |> assign(:page_function_name, "New")
+            |> render("new.html", changeset: changeset, page_function_name: conn.assigns.page_function_name)
     end
   end
 
@@ -48,13 +51,13 @@ defmodule AdminManager.Admin.ProductsController do
     case Repo.update(changeset) do
       {:ok, _product} ->
         conn
-        |> put_flash(:info, "Product Updated successfully.")
-        |> redirect(to: admin_products_path(conn, :edit, id))
+          |> put_flash(:info, "Product Updated successfully.")
+            |> redirect(to: admin_products_path(conn, :edit, id))
       {:error, changeset} ->
         conn
-        |> assign(:page_function_name, "Edit")
-        |> put_flash(:error, "Something went wrong!")
-        |> render("edit.html", changeset: changeset, product: product, page_function_name: conn.assigns.page_function_name)
+          |> assign(:page_function_name, "Edit")
+            |> put_flash(:error, "Something went wrong!")
+              |> render("edit.html", changeset: changeset, product: product, page_function_name: conn.assigns.page_function_name)
     end
   end
 
@@ -68,14 +71,5 @@ defmodule AdminManager.Admin.ProductsController do
         conn = put_flash(conn, :error, "Something went wrong!")
     end
     redirect(conn, to: admin_products_path(conn, :index))
-  end
-
-  defp set_title(conn, _) do
-    assign(conn, :title, "Product")
-  end
-
-  defp set_page_function_name(conn, _) do
-    page_function_name = String.capitalize(Atom.to_string(action_name(conn)))
-    assign(conn, :page_function_name, page_function_name)
   end
 end
