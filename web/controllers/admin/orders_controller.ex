@@ -1,19 +1,15 @@
 require IEx
 defmodule AdminManager.Admin.OrdersController do
   use AdminManager.Web, :controller
-  plug :set_title
+  alias AdminManager.Order
+
+  import AdminManager.Plugs.Admin.PageInfoPlug
+
+  plug :set_title, "Order" when action in [:index, :show, :new, :edit]
   plug :set_page_function_name
 
   def index(conn, _params) do
-    render(conn, "index.html", title: conn.assigns.title)
-  end
-
-  defp set_title(conn, _) do
-    assign(conn, :title, "Order")
-  end
-
-  defp set_page_function_name(conn, _) do
-    page_function_name = String.capitalize(Atom.to_string(action_name(conn)))
-    assign(conn, :page_function_name, page_function_name)
+    orders = Repo.all(Order)
+    render(conn, "index.html", orders: orders, title: conn.assigns.title)
   end
 end

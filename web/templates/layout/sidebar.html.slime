@@ -30,6 +30,13 @@ nav.side-navbar
         / li
         /   a href="#"  Page
     li
+      a aria-expanded="false" data-toggle="collapse" href="#dashorders"
+        i.icon-interface-windows
+        | Orders
+      ul#dashorders.collapse.list-unstyled
+        li
+          = link "All orders", to: admin_orders_path(@conn, :index)
+    li
       a aria-expanded="false" data-toggle="collapse" href="#dashstatistics"
         i.icon-interface-windows
         | Statistics

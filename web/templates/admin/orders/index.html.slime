@@ -1,7 +1,28 @@
 table.table
+  = link "New", to: admin_orders_path(@conn, :new), class: "btn btn-primary"
+  br
+  br
   thead
     tr
       th ID
-      th Name
+      th Code
+      th Customer
+      th Date Created
       th
   tbody
+    = for order <- @orders do
+      tr
+        td
+          = order.id
+        td
+          = link order.code, to: admin_orders_path(@conn, :show, order)
+        td
+          = order.customer_name
+        td
+          / = Timex.parse("%Y-%m-%d %H:%M:%S", :strftime)
+          = order.inserted_at
+        td.text-right
+          = link "Update", to: admin_orders_path(@conn, :edit, order),
+            class: "btn btn-success btn-xs"
+          = link "Delete", to: admin_orders_path(@conn, :delete, order), method: :delete,
+            class: "btn btn-danger", data: [confirm: "Are you sure?"]

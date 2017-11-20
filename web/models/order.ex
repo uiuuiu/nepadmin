@@ -5,6 +5,7 @@ defmodule AdminManager.Order do
     belongs_to :customer, AdminManager.Customer
     belongs_to :address, AdminManager.Address
 
+    field :code, :string
     field :customer_name, :string
     field :customer_mobile_phone, :string
     field :customer_phone, :string

@@ -3,6 +3,7 @@ defmodule AdminManager.Repo.Migrations.CreateOrder do
 
   def change do
     create table(:orders) do
+      add :code, :string
       add :customer_name, :string
       add :customer_mobile_phone, :string
       add :customer_phone, :string
