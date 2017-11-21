@@ -19,8 +19,7 @@ table.table
         td
           = order.customer_name
         td
-          / = Timex.parse("%Y-%m-%d %H:%M:%S", :strftime)
-          = order.inserted_at
+          = order.inserted_at |> StringConverter.stringtoday_to_datetime
         td.text-right
           = link "Update", to: admin_orders_path(@conn, :edit, order),
             class: "btn btn-success btn-xs"

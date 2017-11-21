@@ -9,6 +9,10 @@ defmodule StringConverter do
     Timex.format! day, "%d/%m/%Y", :strftime
   end
 
+  def stringtoday_to_datetime(day) do
+    Timex.format! day, "%d/%m/%Y %H:%M:%S", :strftime
+  end
+
   def stringdate_to_db_data(day, format) do
     Timex.format! Timex.parse!(day, format, :strftime), "%Y%m%d", :strftime
   end
