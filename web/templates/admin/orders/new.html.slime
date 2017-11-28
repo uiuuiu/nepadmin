@@ -1,0 +1,71 @@
+= form_for @changeset, admin_orders_path(@conn, :create), [class: "form-horizontal"], fn f ->
+  .form-group.row
+    label.col-sm-3.form-control-label First Name:
+    .col-md-5
+      = text_input f, :first_name, [class: "form-control"]
+  .form-group.row
+    label.col-sm-3.form-control-label Middle name:
+    .col-md-5
+      = text_input f, :middle_name, [class: "form-control"]
+  .form-group.row
+    label.col-sm-3.form-control-label Last Name:
+    .col-md-5
+      = text_input f, :last_name, [class: "form-control"]
+  .form-group.row
+    label.col-sm-3.form-control-label Address:
+    .col-md-5
+      = text_input f, :address_info, [class: "form-control"]
+  .form-group.row
+    label.col-sm-3.form-control-label City:
+    .col-md-5
+      = text_input f, :city_name, [class: "form-control"]
+  .form-group.row
+    label.col-sm-3.form-control-label Customer Mobile Phone:
+    .col-md-5
+      = text_input f, :customer_mobile_phone, [class: "form-control"]
+  .form-group.row
+    label.col-sm-3.form-control-label Customer Phone:
+    .col-md-5
+      = text_input f, :customer_phone, [class: "form-control"]
+  .form-group.row
+    label.col-sm-3.form-control-label Goods Address:
+    .col-md-5
+      = text_input f, :goods_address, [class: "form-control"]
+  .form-group.row
+    label.col-sm-3.form-control-label Expected Delivery Date:
+    .col-md-5
+      = date_select f, :expected_delivery_date
+  .form-group.row
+    label.col-sm-3.form-control-label Expected Delivery Time:
+    .col-md-5
+      = datetime_select f, :expected_delivery_time, builder: fn t ->
+        = t.(:hour, [class: "form-control", style: "width: 100px; float: left; margin-right: 20px;"])
+        = t.(:minute, [class: "form-control", style: "width: 100px;"])
+  .form-group.row
+    label.col-sm-3.form-control-label Expected Receive Date:
+    .col-md-5
+      = date_select f, :expected_receive_date
+  .form-group.row
+    label.col-sm-3.form-control-label Expected Receive Time:
+    .col-md-5
+      = datetime_select f, :expected_receive_time, builder: fn t ->
+        = t.(:hour, [class: "form-control", style: "width: 100px; float: left; margin-right: 20px;"])
+        = t.(:minute, [class: "form-control", style: "width: 100px;"])
+  .form-group.row
+    label.col-sm-3.form-control-label Real Delivery Date:
+    .col-md-5
+      = date_select f, :real_delivery_date
+  .form-group.row
+    label.col-sm-3.form-control-label Real Delivery Time:
+    .col-md-5
+      = datetime_select f, :real_delivery_time, builder: fn t ->
+        = t.(:hour, [class: "form-control", style: "width: 100px; float: left; margin-right: 20px;"])
+        = t.(:minute, [class: "form-control", style: "width: 100px;"])
+  .form-group.row
+    label.col-sm-3.form-control-label Total:
+    .col-md-5
+      = text_input f, :total, [class: "form-control"]
+  .line
+  .form-group.row
+    .col-sm-4.offset-sm-3
+      = submit "Submit", [class: "btn btn-primary"]

@@ -1,3 +1,4 @@
+require IEx
 defmodule AdminManager.Plugs.Admin.PageInfoPlug do
   @moduledoc false
   import Plug.Conn

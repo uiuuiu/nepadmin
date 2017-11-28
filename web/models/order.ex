@@ -26,7 +26,7 @@ defmodule AdminManager.Order do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:customer_name, :customer_mobile_phone, :customer_phone, :goods_address, :expected_delivery_date, :expected_delivery_time, :expected_receive_date, :expected_receive_time, :real_delivery_date, :real_delivery_time, :total])
+    |> cast(params, [:customer_id, :address_id, :code, :customer_name, :customer_mobile_phone, :customer_phone, :goods_address, :expected_delivery_date, :expected_delivery_time, :expected_receive_date, :expected_receive_time, :real_delivery_date, :real_delivery_time, :total])
     |> validate_required([:customer_name, :customer_mobile_phone, :customer_phone, :goods_address, :expected_delivery_date, :expected_delivery_time, :expected_receive_date, :expected_receive_time, :real_delivery_date, :real_delivery_time, :total])
   end
 end
