@@ -24,3 +24,5 @@ erl_crash.dump
 /config/prod.secret.exs
 **/.DS_Store
 .DS_Store
+mix.lock
+/config/dev.exs
