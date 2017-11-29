@@ -1,3 +1,4 @@
+= admin_error_tag get_flash(@conn, :info), get_flash(@conn, :error)
 table.table
   = link "New", to: admin_orders_path(@conn, :new), class: "btn btn-primary"
   br

@@ -1,0 +1,52 @@
+.form-group.row
+  label.col-sm-3.form-control-label Customer Name:
+  .col-md-3
+    = @order.customer_name
+.form-group.row
+  label.col-sm-3.form-control-label Customer mobile phone:
+  .col-md-3
+    = @order.customer_mobile_phone
+.form-group.row
+  label.col-sm-3.form-control-label Customer phone:
+  .col-md-3
+    = @order.customer_phone
+.form-group.row
+  label.col-sm-3.form-control-label Goods address:
+  .col-md-3
+    = @order.goods_address
+.form-group.row
+  label.col-sm-3.form-control-label Address:
+  .col-md-3
+    = @order.address.address_info
+.form-group.row
+  label.col-sm-3.form-control-label City:
+  .col-md-3
+    = @order.address.city_name
+.form-group.row
+  label.col-sm-3.form-control-label Expected delivery date:
+  .col-md-3
+    = @order.expected_delivery_date
+.form-group.row
+  label.col-sm-3.form-control-label Expected delivery time:
+  .col-md-3
+    = @order.expected_delivery_time
+.form-group.row
+  label.col-sm-3.form-control-label Expected receive date:
+  .col-md-3
+    = @order.expected_receive_date
+.form-group.row
+  label.col-sm-3.form-control-label Expected receive time:
+  .col-md-3
+    = @order.expected_receive_time
+.form-group.row
+  label.col-sm-3.form-control-label Real delivery date:
+  .col-md-3
+    = @order.real_delivery_date
+.form-group.row
+  label.col-sm-3.form-control-label Real delivery time:
+  .col-md-3
+    = @order.real_delivery_time
+.form-group.row
+  label.col-sm-3.form-control-label Total:
+  .col-md-3
+    = @order.total
