@@ -8,7 +8,7 @@ defmodule AdminManager.Admin.ProductDetailController do
 
   import AdminManager.Plugs.Admin.PageInfoPlug
 
-  plug :set_title, "Product Detail" when action in [:index, :show, :new, :edit]
+  plug :set_title, "Product Detail"
   plug :set_page_function_name
 
   def index(conn, _params) do
@@ -31,15 +31,19 @@ defmodule AdminManager.Admin.ProductDetailController do
     profit = String.to_integer(product_detail_version_params["price"]) - String.to_integer(product_detail_version_params["initial_price"])
     product_detail_version_params = Map.put(product_detail_version_params, "profit", profit)
     # IEx.pry
-    changeset = ProductDetailVersion.changeset(%ProductDetailVersion{}, product_detail_version_params)
+    changeset = ProductDetailVersion.new_changset(%ProductDetailVersion{}, product_detail_version_params)
     case Repo.insert(changeset) do
       {:ok, _product} ->
         conn
           |> put_flash(:info, "Product abc created a version successfully.")
             |> redirect(to: admin_product_detail_path(conn, :index))
       {:error, changeset} ->
-        page_function_name = "New"
-        render(conn, "edit.html", changeset: changeset, page_function_name: conn.assigns.page_function_name)
+        errors = Enum.map(changeset.errors, fn {field_error, error_message} ->
+          render_detail(error_message)
+        end)
+        conn
+          |> put_flash(:error, errors)
+            |> redirect(to: admin_product_detail_path(conn, :index))
     end
   end
 
@@ -87,5 +91,15 @@ defmodule AdminManager.Admin.ProductDetailController do
         page_function_name = "Edit"
         render(conn, "edit.html", changeset: changeset, page_function_name: conn.assigns.page_function_name)
     end
+  end
+
+  defp render_detail({message, values}) do
+    Enum.reduce values, message, fn {k, v}, acc ->
+      String.replace(acc, "%{#{k}}", to_string(v))
+    end
+  end
+
+  defp render_detail(message) do
+    message
   end
 end

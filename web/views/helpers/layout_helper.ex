@@ -24,7 +24,7 @@ defmodule AdminManager.LayoutHelper do
     end
   end
 
-  def admin_error_tag(info, error) do
+  def admin_error_tag(info, errors) do
     content_tag(:div, class: "row") do
       content_tag(:div, class: "col-sm-12") do
         [
@@ -35,9 +35,11 @@ defmodule AdminManager.LayoutHelper do
           else
             ""
           end,
-          if error do
+          if errors do
             content_tag(:div, class: "alert alert-danger", role: "alert") do
-              content_tag(:p, error)
+              for error <- errors do
+                content_tag(:p, error)
+              end
             end
           else
             ""

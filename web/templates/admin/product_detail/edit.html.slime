@@ -70,8 +70,10 @@
     .line
     .form-group.row
       .col-sm-4.offset-sm-3
-        = submit "Submit", [class: "btn btn-primary"]
+        = submit "Update", [class: "btn btn-primary"]
         = link "Back", to: admin_product_detail_path(@conn, :index), class: "btn btn-xs"
+      .col-sm-4
+        = submit "Create", [class: "btn btn-danger", id: "btn_create_product_detail"]
 - else
   = form_for @changeset, admin_product_detail_path(@conn, :create), [class: "form-horizontal"], fn f ->
     = hidden_input f, :product_id
