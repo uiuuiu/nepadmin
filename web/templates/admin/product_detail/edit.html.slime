@@ -23,18 +23,20 @@
         = @latest_product_detail_version.product.name
         / = text_input f, :name, [class: "form-control"]
     .line
-    .form-group.row
+    .form-group.row class="<%= if f.errors[:effect_start_day] || f.errors[:effect_end_day] do ~s(has-danger) end %>"
       label.col-sm-3.form-control-label Version effect day:
       .col-md-1
         | From
       .col-md-2
-        - start_day = StringConverter.stringdate_to_date(@latest_product_detail_version.effect_start_day, "%Y%m%d")
+        - start_day = StringConverter.stringdate_to_date(f.data.effect_start_day, "%Y%m%d")
         = text_input f, :effect_start_day, [class: "form-control datepicker", size: 8, value: start_day]
+        = error_tag f, :effect_start_day
       .col-md-1
         | to
       .col-md-2
-        - end_day = StringConverter.stringdate_to_date(@latest_product_detail_version.effect_end_day, "%Y%m%d")
+        - end_day = StringConverter.stringdate_to_date(f.data.effect_end_day, "%Y%m%d")
         = text_input f, :effect_end_day, [class: "form-control datepicker", size: 8, value: end_day]
+        = error_tag f, :effect_end_day
     .line
     .form-group.row
       label.col-sm-3.form-control-label Producer:
@@ -46,16 +48,18 @@
       .col-md-3
         = select f, :product_type_id, Enum.map(@product_types, &{&1.name, &1.id}), prompt: ""
     .line
-    .form-group.row
+    .form-group.row class="<%= if f.errors[:initial_price] do ~s(has-danger) end %>"
       label.col-sm-3.form-control-label Initial Price:
       .col-md-3
         = number_input f, :initial_price, [class: "form-control"]
+        = error_tag f, :initial_price
       h3.h4.strong VND
     .line
-    .form-group.row
+    .form-group.row class="<%= if f.errors[:price] do ~s(has-danger) end %>"
       label.col-sm-3.form-control-label Price:
       .col-md-3
         = number_input f, :price, [class: "form-control"]
+        = error_tag f, :price
       h3.h4.strong VND
     .line
     .form-group.row
@@ -63,15 +67,18 @@
       .col-md-3
         = NumberConverter.to_vnd_currency @latest_product_detail_version.profit
     .line
-    .form-group.row
+    .form-group.row class="<%= if f.errors[:amount] do ~s(has-danger) end %>"
       label.col-sm-3.form-control-label Amount:
       .col-md-3
         = number_input f, :amount, [class: "form-control"]
+        = error_tag f, :amount
     .line
     .form-group.row
       .col-sm-4.offset-sm-3
-        = submit "Submit", [class: "btn btn-primary"]
+        = submit "Update", [class: "btn btn-primary"]
         = link "Back", to: admin_product_detail_path(@conn, :index), class: "btn btn-xs"
+      .col-sm-4
+        = submit "Create", [class: "btn btn-danger", id: "btn_create_product_detail"]
 - else
   = form_for @changeset, admin_product_detail_path(@conn, :create), [class: "form-horizontal"], fn f ->
     = hidden_input f, :product_id
@@ -80,18 +87,20 @@
       .col-md-3
         = @latest_product_detail_version.product.name
     .line
-    .form-group.row
+    .form-group.row class="<%= if f.errors[:effect_start_day] || f.errors[:effect_end_day] do ~s(has-danger) end %>"
       label.col-sm-3.form-control-label Version effect day:
       .col-md-1
         | From
       .col-md-2
         - start_day = StringConverter.stringtoday_to_date(Timex.today)
         = text_input f, :effect_start_day, [class: "form-control datepicker", size: 8, value: start_day]
+        = error_tag f, :effect_start_day
       .col-md-1
         | to
       .col-md-2
         - end_day = StringConverter.stringtoday_to_date(Timex.today)
         = text_input f, :effect_end_day, [class: "form-control datepicker", size: 8, value: end_day]
+        = error_tag f, :effect_end_day
     .line
     .form-group.row
       label.col-sm-3.form-control-label Producer:
@@ -103,16 +112,18 @@
       .col-md-3
         = select f, :product_type_id, Enum.map(@product_types, &{&1.name, &1.id}), prompt: ""
     .line
-    .form-group.row
+    .form-group.row class="<%= if f.errors[:initial_price] do ~s(has-danger) end %>"
       label.col-sm-3.form-control-label Initial Price:
       .col-md-3
         = number_input f, :initial_price, [class: "form-control"]
+        = error_tag f, :initial_price
       h3.h4.strong VND
     .line
-    .form-group.row
+    .form-group.row class="<%= if f.errors[:price] do ~s(has-danger) end %>"
       label.col-sm-3.form-control-label Price:
       .col-md-3
         = number_input f, :price, [class: "form-control"]
+        = error_tag f, :price
       h3.h4.strong VND
     .line
     .form-group.row
@@ -120,10 +131,11 @@
       .col-md-3
         = NumberConverter.to_vnd_currency @latest_product_detail_version.profit
     .line
-    .form-group.row
+    .form-group.row class="<%= if f.errors[:amount] do ~s(has-danger) end %>"
       label.col-sm-3.form-control-label Amount:
       .col-md-3
         = number_input f, :amount, [class: "form-control"]
+        = error_tag f, :amount
     .line
     .form-group.row
       .col-sm-4.offset-sm-3
