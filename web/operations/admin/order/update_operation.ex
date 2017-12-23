@@ -8,9 +8,9 @@ defmodule AdminManager.Admin.UpdateOperation do
   def call(id, order_params) do
     order = Repo.get(Order, id)
     customer = Repo.preload(order, :customer).customer
-    AdminManager.Admin.UpdateOperation.update_customer(order, order_params, customer)
     AdminManager.Admin.UpdateOperation.update_address(order, order_params)
     AdminManager.Admin.UpdateOperation.update_order(order_params, customer, order)
+    AdminManager.Admin.UpdateOperation.update_customer(order, order_params, customer)
   end
 
   def update_order(order_params, customer, order) do

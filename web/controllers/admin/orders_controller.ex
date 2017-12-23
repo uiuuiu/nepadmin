@@ -2,6 +2,7 @@ require IEx
 defmodule AdminManager.Admin.OrdersController do
   use AdminManager.Web, :controller
   alias AdminManager.Order
+  alias AdminManager.ErrorRenderOperation
   alias AdminManager.Order.Helper.ConvertDateTimeOperation
   alias AdminManager.Order.CreateCustomerOperation
   alias AdminManager.Order.CreateAddressOperation
@@ -64,11 +65,15 @@ defmodule AdminManager.Admin.OrdersController do
       update_order = UpdateOperation.call(id, order_params)
       case update_order do
         {:ok, _order} ->
-          conn = put_flash(conn, :info, "Order Updated successfully.")
+          conn
+            |> put_flash(:info, "Order updated successfully.")
+              |> redirect(to: admin_orders_path(conn, :index))
         {:error, changeset} ->
-          conn = put_flash(conn, :error, "Something went wrong!")
+          errors = ErrorRenderOperation.render_multi_errors(changeset)
+          conn
+            |> put_flash(:error, errors)
+              |> redirect(to: admin_orders_path(conn, :edit, id))
       end
-      redirect(conn, to: admin_orders_path(conn, :index))
     end)
   end
 end
