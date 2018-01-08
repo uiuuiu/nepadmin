@@ -49,7 +49,7 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :admin_manager, AdminManager.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "asiantech",
+  username: "postgres",
   password: "123456",
   database: "admin_manager_dev",
   hostname: "localhost",
