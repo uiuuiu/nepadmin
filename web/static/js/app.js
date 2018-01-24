@@ -12,8 +12,20 @@
 // If you no longer want to use a dependency, remember
 // to also remove its path from "config.paths.watched".
 import "phoenix_html"
+import "phoenix_ujs"
+import $ from "jquery"
+import jQuery from 'jquery'
 $(document).off('click.bs.dropdown.data-api', '.dropdown form');
 // Import local files
 //
 // Local files can be imported directly using relative
 // paths "./socket" or full ones "web/static/js/socket".
+$('.radio-submit').click(function(e) {
+  var calendar_id = $(this).attr('calendar_id');
+  var product_id  = $(this).attr('product_id');
+  $.ajax({
+    type: "GET",
+    url: '/admin/products/' + product_id + '/detail_versions',
+    data: {calendar_id: calendar_id}
+  });
+});

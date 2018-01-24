@@ -9,6 +9,8 @@ defmodule AdminManager.Admin.ProductsController do
   alias AdminManager.Admin.Product.UpdateOperation
   alias AdminManager.Admin.Product.ShowOperation
   alias AdminManager.Admin.Product.DeleteOperation
+  alias AdminManager.Repo
+  alias AdminManager.Product
 
   import AdminManager.Plugs.Admin.PageInfoPlug
 

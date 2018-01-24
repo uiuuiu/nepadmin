@@ -1,0 +1,3 @@
+| $(".table-product-day-static").html('
+= render AdminManager.Admin.Statistics.DayStatisticView, "detail_version.html", product: @product, sales: @sales, product_day_statistic: @product_day_statistic, calendar: @calendar
+|  ')
