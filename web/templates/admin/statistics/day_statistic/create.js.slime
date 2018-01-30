@@ -1,0 +1,4 @@
+| $('.product_amount').val('');
+| $('.product_profit').val('');
+| $('.sale_id_select').prop('selectedIndex', 0);
+| $("#notification").fadeIn('slow').delay(2000).fadeOut('slow').append('Create successful');

@@ -31,9 +31,13 @@ defmodule AdminManager.Admin.Statistics.DayStatisticController do
                               page_function_name: conn.assigns.page_function_name, products: products
   end
 
-  def create(conn, _params) do
-    IEx.pry
+  def create(conn, %{"product_day_statistics" => product_day_statistics_params}) do
     # product_day_statistics_params = Enum.map(product_day_statistics_params, fn {key, value} -> value end)
+    # for element_params <- product_day_statistics_params do
+    #   ProductDayStatistic.changeset(%ProductDayStatistic{}, element_params)
+    #     |> Repo.insert()
+    # end
+    render(conn, "create.js")
     # product_ids = Enum.map(product_day_statistics_params, fn(x) -> x["product_id"] end)
     # products = Repo.all(from x in Product, where: x.id in ^product_ids)
     # products = Repo.preload(products, [product_day_statistic: ProductDayStatistic.product_day_statistic_by_day(calendar_id)])

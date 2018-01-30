@@ -29,3 +29,6 @@ $('.radio-submit').click(function(e) {
     data: {calendar_id: calendar_id}
   });
 });
+$(".dismiss")(function(){
+  $("#notification").fadeOut("slow");
+});

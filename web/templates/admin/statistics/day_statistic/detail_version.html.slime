@@ -1,6 +1,7 @@
 - product = @product
 - product_day_statistic = @product_day_statistic
 - calendar = @calendar
+div id="notification" style="display: none;"
 <form action="/admin/statistics/day_statistic" method="POST" ujs-remote>
   table.table
     thead
@@ -11,23 +12,28 @@
         th Profit
         th Sale
     tbody
-      = for product_detail_version <- product.product_detail_versions do
+
+      = for {product_detail_version, counter} <- Enum.with_index(product.product_detail_versions) do
         tr
           td
-            input type="hidden" name="calendar_id" value="#{calendar.id}"
+            input type="hidden" name="product_day_statistics[#{counter}][calendar_id]" value="#{calendar.id}"
+            input type="hidden" name="product_day_statistics[#{counter}][product_id]" value="#{product.id}"
+            input type="hidden" name="product_day_statistics[#{counter}][product_detail_version_id]" value="#{product_detail_version.id}"
             = product_detail_version.effect_start_day
             br
             | ~
             br
             = product_detail_version.effect_end_day
           td
-            input type="number" value="#{product_detail_version.price}" style="width: 130px"
+            input type="number" disabled="disabled" value="#{product_detail_version.price}" style="width: 130px"
           td
-            input type="number" name="product_day_statistic[][amount]" style="width: 130px"
+            input type="number" name="product_day_statistics[#{counter}][amount]" class="product_amount" style="width: 130px"
           td
-            input type="number" name="product_day_statistic[][profit]" style="width: 130px"
+            input type="number" name="product_day_statistics[#{counter}][profit]" class="product_profit" style="width: 130px"
           td
-            select name="product_day_statistic[][sale_id]" class="form-control"
+            select name="product_day_statistics[#{counter}][sale_id]" class="sale_id_select form-control"
+              option value=""
+                | Select
               = for sale <- @sales do
                 option value="#{sale.id}"
                   = sale.name

@@ -8,6 +8,7 @@ html lang="en"
     meta content="" name="description"
     meta content="" name="author"
     meta content="all,follow" name="robots"
+    <%= csrf_meta_tag() %>
     /! Google fonts - Roboto
     link href="https://fonts.googleapis.com/css?family=Poppins:300,400,700" rel="stylesheet"
     /! Custom stylesheet - for your changes
