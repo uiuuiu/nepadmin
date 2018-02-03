@@ -28,6 +28,7 @@ defmodule AdminManager.Router do
   scope "/admin", AdminManager.Admin, as: :admin do
     pipe_through [:browser, :admin]
     get "/", AdminController, :index
+    # Product will generate path : '/admin/products/:product_id/detail_versions'
     resources "/products", Product, only: [] do
       resources "/detail_versions", Products.ProductDetailVersionsController, only: [:index]
     end
