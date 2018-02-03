@@ -31,4 +31,9 @@ defmodule AdminManager.ProductDayStatistic do
     from c in AdminManager.ProductDayStatistic,
       where: c.calendar_id in ^calendar_ids
   end
+
+  def load_product_day_statistic(product_id, product_detail_version_id, calendar_id) do
+    AdminManager.Repo.get_by(AdminManager.ProductDayStatistic, product_id: product_id,
+      product_detail_version_id: product_detail_version_id, calendar_id: calendar_id)
+  end
 end

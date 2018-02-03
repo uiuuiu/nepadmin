@@ -10,7 +10,7 @@
 div.row
   div.col-md-3
     = for product <- @products do
-      input type="radio" class="radio-submit" product_id="#{product.id}" calendar_id="#{calendar.id}"
+      input type="radio" name='noname' class="radio-submit" product_id="#{product.id}" calendar_id="#{calendar.id}"
       = product.name
       br
   div.table-product-day-static.col-md-9

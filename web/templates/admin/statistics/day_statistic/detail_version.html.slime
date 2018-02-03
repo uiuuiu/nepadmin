@@ -14,6 +14,15 @@ div id="notification" style="display: none;"
     tbody
 
       = for {product_detail_version, counter} <- Enum.with_index(product.product_detail_versions) do
+        - product_day_statistic = AdminManager.ProductDayStatistic.load_product_day_statistic(product.id, product_detail_version.id, calendar.id)
+        - product_day_statistic_amount  = ""
+        - product_day_statistic_profit  = ""
+        - product_day_statistic_sale_id = 0
+        - if product_day_statistic do
+          - product_day_statistic_amount  = product_day_statistic.amount
+          - product_day_statistic_profit  = product_day_statistic.profit
+          - product_day_statistic_sale_id = product_day_statistic.sale_id
+
         tr
           td
             input type="hidden" name="product_day_statistics[#{counter}][calendar_id]" value="#{calendar.id}"
@@ -27,16 +36,16 @@ div id="notification" style="display: none;"
           td
             input type="number" disabled="disabled" value="#{product_detail_version.price}" style="width: 130px"
           td
-            input type="number" name="product_day_statistics[#{counter}][amount]" class="product_amount" style="width: 130px"
+            input type="number" name="product_day_statistics[#{counter}][amount]" class="product_amount" value="#{product_day_statistic_amount}" style="width: 130px"
           td
-            input type="number" name="product_day_statistics[#{counter}][profit]" class="product_profit" style="width: 130px"
+            input type="number" name="product_day_statistics[#{counter}][profit]" class="product_profit" value="#{product_day_statistic_profit}" style="width: 130px"
           td
             select name="product_day_statistics[#{counter}][sale_id]" class="sale_id_select form-control"
-              option value=""
+              option
                 | Select
-              = for sale <- @sales do
-                option value="#{sale.id}"
-                  = sale.name
+                = for sale <- @sales do
+                  = tag(:option, [value: sale.id, selected: sale.id == product_day_statistic_sale_id])
+                    = sale.name
         tr
           td style="border: none"
           td colspan="4" style="border: none"
