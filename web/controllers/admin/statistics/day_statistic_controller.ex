@@ -25,34 +25,45 @@ defmodule AdminManager.Admin.Statistics.DayStatisticController do
     calendar = Repo.get_by(Calendar, date: date)
     changeset = Calendar.changeset(calendar)
     products = Repo.all(Product)
-    products = Repo.preload(products, [:product_detail_versions, product_day_statistic: ProductDayStatistic.product_day_statistic_by_day(calendar.id)])
-    sales = Repo.all(Sale)
-    render conn, "show.html", title: conn.assigns.title, changeset: changeset, page_function_name: conn.assigns.page_function_name,
-           calendar: calendar, products: products, sales: sales
+    # products = Repo.preload(products, [:product_detail_versions, product_day_statistic: ProductDayStatistic.product_day_statistic_by_day(calendar.id)])
+    # sales = Repo.all(Sale)
+    render conn, "show.html", title: conn.assigns.title, changeset: changeset, calendar: calendar,
+                              page_function_name: conn.assigns.page_function_name, products: products
   end
 
-  def create(conn, %{"calendar_id" => calendar_id, "product_day_statistics" => product_day_statistics_params}) do
+  def create(conn, %{"product_day_statistics" => product_day_statistics_params}) do
     product_day_statistics_params = Enum.map(product_day_statistics_params, fn {key, value} -> value end)
-    product_ids = Enum.map(product_day_statistics_params, fn(x) -> x["product_id"] end)
-    products = Repo.all(from x in Product, where: x.id in ^product_ids)
-    products = Repo.preload(products, [product_day_statistic: ProductDayStatistic.product_day_statistic_by_day(calendar_id)])
     for element_params <- product_day_statistics_params do
-      product = Enum.find(products, fn(x) -> x.id == String.to_integer(element_params["product_id"]) end)
-
-      if product do
-        statistic = product.product_day_statistic
-      end
-      cond do
-        statistic ->
-          ProductDayStatistic.changeset(statistic, element_params)
-            |> Repo.update
-        product ->
-          ProductDayStatistic.changeset(%ProductDayStatistic{}, element_params)
-            |> Repo.insert
+      product_day_statistic = ProductDayStatistic.load_product_day_statistic(element_params["product_id"], element_params["product_detail_version_id"], element_params["calendar_id"])
+      if product_day_statistic do
+        ProductDayStatistic.changeset(product_day_statistic, element_params)
+        |> Repo.update
+      else
+        ProductDayStatistic.changeset(%ProductDayStatistic{}, element_params)
+        |> Repo.insert
       end
     end
-    conn
-      |> put_flash(:info, "Producer created successfully.")
-        |> redirect_back
+    render(conn, "create.js")
+    # product_ids = Enum.map(product_day_statistics_params, fn(x) -> x["product_id"] end)
+    # products = Repo.all(from x in Product, where: x.id in ^product_ids)
+    # products = Repo.preload(products, [product_day_statistic: ProductDayStatistic.product_day_statistic_by_day(calendar_id)])
+    # for element_params <- product_day_statistics_params do
+    #   product = Enum.find(products, fn(x) -> x.id == String.to_integer(element_params["product_id"]) end)
+
+    #   if product do
+    #     statistic = product.product_day_statistic
+    #   end
+    #   cond do
+    #     statistic ->
+    #       ProductDayStatistic.changeset(statistic, element_params)
+    #         |> Repo.update
+    #     product ->
+    #       ProductDayStatistic.changeset(%ProductDayStatistic{}, element_params)
+    #         |> Repo.insert
+    #   end
+    # end
+    # conn
+    #   |> put_flash(:info, "Producer created successfully.")
+    #     |> redirect_back
   end
 end
