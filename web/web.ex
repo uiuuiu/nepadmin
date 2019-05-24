@@ -54,6 +54,7 @@ defmodule AdminManager.Web do
       import AdminManager.ErrorHelpers
       import AdminManager.Gettext
       import AdminManager.LayoutHelper
+      import AdminManager.Coherence.ViewHelpers
     end
   end
 

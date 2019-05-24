@@ -30,3 +30,21 @@ config :phoenix, :template_engines,
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
+
+# %% Coherence Configuration %%   Don't remove this line
+config :coherence,
+  user_schema: AdminManager.User,
+  repo: AdminManager.Repo,
+  module: AdminManager,
+  web_module: AdminManager,
+  router: AdminManager.Router,
+  messages_backend: AdminManager.Coherence.Messages,
+  logged_out_url: "/admin",
+  email_from_name: "Your Name",
+  email_from_email: "yourname@example.com",
+  opts: [:authenticatable, :recoverable, :lockable, :trackable, :unlockable_with_token, :registerable]
+
+config :coherence, AdminManager.Coherence.Mailer,
+  adapter: Swoosh.Adapters.Sendgrid,
+  api_key: "your api key here"
+# %% End Coherence Configuration %%

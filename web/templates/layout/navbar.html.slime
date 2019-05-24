@@ -103,5 +103,6 @@ header.header
           /! Logout
           li.nav-item
             a.nav-link.logout href="login.html"
-              | Logout
-              i.fa.fa-sign-out
+              = if logged_in?(@conn) do
+                = signout_link(@conn, "Logout")
+                i.fa.fa-sign-out

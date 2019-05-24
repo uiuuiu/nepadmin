@@ -1,5 +1,6 @@
 defmodule AdminManager.Router do
   use AdminManager.Web, :router
+  use Coherence.Router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -7,26 +8,42 @@ defmodule AdminManager.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug NavigationHistory.Tracker
+    plug Coherence.Authentication.Session
   end
+
+  pipeline :protected do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_flash
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
+    plug :put_layout, {AdminManager.LayoutView, :admin_app}
+    plug Coherence.Authentication.Session, protected: true
+  end
+
+  scope "/" do
+    pipe_through :browser
+    coherence_routes()
+  end
+
+  scope "/" do
+    pipe_through :protected
+    coherence_routes :protected
+  end
+
 
   pipeline :api do
     plug :accepts, ["json"]
   end
 
-  pipeline :admin do
-    plug AdminManager.Plugs.Admin.AdminPagePlug
-    plug :put_layout, {AdminManager.LayoutView, :admin_app}
-  end
-
   scope "/", AdminManager do
-    pipe_through :browser # Use the default browser stack
+    pipe_through :browser
 
     get "/", PageController, :index
   end
 
   scope "/admin", AdminManager.Admin, as: :admin do
-    pipe_through [:browser, :admin]
+    pipe_through :protected
     get "/", AdminController, :index
     resources "/products", ProductsController
     resources "/producers", ProducersController

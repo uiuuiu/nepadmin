@@ -20,7 +20,7 @@ defmodule AdminManager.Mixfile do
   def application do
     [
       mod: {AdminManager, []},
-      extra_applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext, :edeliver]
+      extra_applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext, :edeliver, :coherence]
     ]
   end
 
@@ -47,7 +47,8 @@ defmodule AdminManager.Mixfile do
       {:credo, "~> 0.8", only: [:dev, :test], runtime: false},
       {:navigation_history, "~> 0.0"},
       {:edeliver, "~> 1.4.3"},
-      {:distillery, "~> 1.5", runtime: false}
+      {:distillery, "~> 1.5", runtime: false},
+      {:coherence, "~> 0.5"}
     ]
   end
 
